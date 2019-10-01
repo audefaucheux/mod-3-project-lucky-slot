@@ -76,6 +76,8 @@ renderBetAmts = user => {
   let betMax = user.credit;
   let betMin = 10;
   let betAmount = betMin;
+  //placeholder
+  betHeader.dataset.id = betAmount
   betHeader.innerText = `You are betting ${betAmount}`;
   betDecrementBtn.addEventListener("click", () => {
     if (betAmount >= 20) {
