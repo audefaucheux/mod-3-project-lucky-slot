@@ -60,6 +60,8 @@ getResult = (randomNumberArray, user) => {
   }
 };
 
+// handle bet functionality 
+
 renderBetAmts = user => {
   let betDiv = document.createElement("div");
   let betHeader = document.createElement("h3");
@@ -135,6 +137,20 @@ renderSlotMachine = user => {
   slotMachineDiv.append(randomNumberDivContainer)
   randomNumberDivContainer.append(randomNumberDivRow)
   getResult(randomNumberArray, user);
+
+//   <div class="container">
+//   <div class="row">
+//     <div class="col-sm">
+//       One of three columns
+//     </div>
+//     <div class="col-sm">
+//       One of three columns
+//     </div>
+//     <div class="col-sm">
+//       One of three columns
+//     </div>
+//   </div>
+// </div>
 };
 
 // display leaderboard
