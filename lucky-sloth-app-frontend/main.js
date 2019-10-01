@@ -59,6 +59,8 @@ getResult = (randomNumberArray, user) => {
   }
 };
 
+// handle bet functionality 
+
 renderBetAmts = user => {
   let betDiv = document.createElement("div");
   let betHeader = document.createElement("h3");
@@ -116,14 +118,36 @@ renderSlotMachine = user => {
     slotMachineDiv.firstChild.remove();
   }
 
+  let randomNumberDivContainer = document.createElement("div")
+  randomNumberDivContainer.className = "container"
+  let randomNumberDivRow = document.createElement("div")
+  randomNumberDivRow.className = "row"
   let randomNumberArray = getRandomNumber();
 
   randomNumberArray.forEach(element => {
-    let randomNumberP = document.createElement("p");
-    randomNumberP.innerText = element;
-    slotMachineDiv.appendChild(randomNumberP);
+    let randomNumberDivCol = document.createElement("div");
+    randomNumberDivCol.className = "col-sm"
+    randomNumberDivCol.innerText = element;
+    randomNumberDivRow.appendChild(randomNumberDivCol);
   });
+
+  slotMachineDiv.append(randomNumberDivContainer)
+  randomNumberDivContainer.append(randomNumberDivRow)
   getResult(randomNumberArray, user);
+
+//   <div class="container">
+//   <div class="row">
+//     <div class="col-sm">
+//       One of three columns
+//     </div>
+//     <div class="col-sm">
+//       One of three columns
+//     </div>
+//     <div class="col-sm">
+//       One of three columns
+//     </div>
+//   </div>
+// </div>
 };
 
 // display leaderboard
