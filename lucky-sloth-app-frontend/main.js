@@ -140,7 +140,7 @@ renderSlotMachine = user => {
   getResult(randomNumberArray, user);
 };
 
-// display leaderboard
+// display leaderboard//
 
 renderLeaderboard = users => {
   const leaderboardTable = document.createElement("table");
