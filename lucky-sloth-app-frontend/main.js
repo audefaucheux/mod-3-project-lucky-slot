@@ -42,15 +42,59 @@ function updateUsersCredit(userData, user) {
 
 getResult = (randomNumberArray, user) => {
   let uniqueNumberArray = [...new Set(randomNumberArray)];
+  let bet = document.querySelector("#bet-header").dataset.id
+  let betNum = parseInt(bet)
   if (uniqueNumberArray.length === 1) {
-    newCredit = user.credit + 50;
+    newCredit = user.credit + betNum * 5;
     updateUsersCredit(newCredit, user);
     slotMachineResultMessageDiv.innerText = "You WON";
   } else {
-    newCredit = user.credit - 10;
+    newCredit = user.credit - betNum;
     updateUsersCredit(newCredit, user);
     slotMachineResultMessageDiv.innerText = "You are a looser";
   }
+};
+
+renderBetAmts = user => {
+  let betDiv = document.createElement("div");
+  let betHeader = document.createElement("h3");
+  betHeader.id = "bet-header"
+  let betDecrementBtn = document.createElement("button");
+  betDecrementBtn.innerText = "-";
+  let betIncrementBtn = document.createElement("button");
+  betIncrementBtn.innerText = "+";
+  let betMaxBtn = document.createElement("button");
+  betMaxBtn.innerText = "Bet MAX";
+  slotMachineHeaderDiv.append(betDiv);
+  betDiv.append(betHeader, betDecrementBtn, betIncrementBtn, betMaxBtn);
+  let betMax = user.credit;
+  let betMin = 10;
+  let betAmount = betMin;
+  betHeader.innerText = `You are betting ${betAmount}`;
+  betDecrementBtn.addEventListener("click", () => {
+    if (betAmount >= 20) {
+      betAmount = betAmount - 10 
+      betHeader.dataset.id = betAmount
+      betHeader.innerText = `You are betting ${betAmount}`;
+    } else { 
+      alert(`The Minimum Bet is £${betMin}`)
+    }
+  })
+  betIncrementBtn.addEventListener("click", () => {
+    if (betAmount >= betMax ) {
+      alert(`The Maximum Bet is £${betMax}`)
+    } else {
+      betAmount = betAmount + 10
+      betHeader.dataset.id = betAmount
+      betHeader.innerText = `You are betting ${betAmount}`;
+    }
+  })
+  betMaxBtn.addEventListener("click", () => {
+    betAmount = betMax
+    betHeader.dataset.id = betAmount
+    betHeader.innerText = `You are betting ${betAmount}`;
+
+  })
 };
 
 getRandomNumber = () => {
@@ -82,8 +126,8 @@ renderWelcomePage = user => {
   }
 
   if (slotMachineHeaderDiv.childElementCount !== 0) {
-    while(slotMachineHeaderDiv.firstChild) {
-      slotMachineHeaderDiv.firstChild.remove()
+    while (slotMachineHeaderDiv.firstChild) {
+      slotMachineHeaderDiv.firstChild.remove();
     }
   }
 
@@ -92,10 +136,10 @@ renderWelcomePage = user => {
   newH2.innerText = `Hi ${user.username}. Your current credit is £${user.credit}`;
 
   let spinButton = document.createElement("button");
-  spinButton.innerText = "SPIN FOR £10";
+  spinButton.innerText = "SPIN";
 
   slotMachineHeaderDiv.append(newH2, spinButton);
-
+  renderBetAmts(user);
   spinButton.addEventListener("click", event => {
     if (user.credit >= 10) {
       renderSlotMachine(user);
