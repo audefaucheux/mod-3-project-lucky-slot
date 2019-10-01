@@ -35,6 +35,7 @@ const slotMachineResultMessageDiv = document.querySelector(
   "div#game-result-message"
 );
 const leaderboardDiv = document.querySelector("div#leaderboard-table");
+const loginDiv = document.querySelector("div#back-to-login")
 
 ////////////////////// FUNCTIONS //////////////////////
 
@@ -207,6 +208,12 @@ renderWelcomePage = user => {
 
   slotMachineHeaderDiv.append(newH2, spinButton);
   renderBetAmts(user);
+
+  
+  let loginBtn = document.createElement("button")
+  loginBtn.innerText = "Log Out"
+  loginDiv.append(loginBtn)
+  loginBtn.addEventListener("click", () => location.reload())
 
   API.get(usersUrl).then(renderLeaderboard);
 
