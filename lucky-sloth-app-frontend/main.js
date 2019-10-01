@@ -1,4 +1,4 @@
-// API
+////////////////////// API //////////////////////
 
 get = url => fetch(url).then(resp => resp.json());
 
@@ -24,7 +24,8 @@ patch = (url, id, data) => {
 
 const API = { get, post, patch };
 
-// CONSTANTS
+////////////////////// CONSTANTS //////////////////////
+
 const usersUrl = "http://localhost:3000/users/";
 const formDiv = document.querySelector("div#form");
 const gameDiv = document.querySelector("div#game-screen");
@@ -33,8 +34,11 @@ const slotMachineDiv = document.querySelector("div#slot-machine");
 const slotMachineResultMessageDiv = document.querySelector(
   "div#game-result-message"
 );
+const leaderboardDiv = document.querySelector("div#leaderboard-table");
 
-// FUNCTIONS
+////////////////////// FUNCTIONS //////////////////////
+
+// handle slot result
 
 function updateUsersCredit(userData, user) {
   API.patch(usersUrl, user.id, { credit: userData }).then(renderWelcomePage);
@@ -105,6 +109,8 @@ getRandomNumber = () => {
   return randomNumberArray;
 };
 
+// display game screen
+
 renderSlotMachine = user => {
   while (slotMachineDiv.firstChild) {
     slotMachineDiv.firstChild.remove();
@@ -120,14 +126,49 @@ renderSlotMachine = user => {
   getResult(randomNumberArray, user);
 };
 
+// display leaderboard
+
+renderLeaderboard = users => {
+  const leaderboardTable = document.createElement("table");
+  const leaderboardThead = document.createElement("thead");
+  const leaderboardTr = document.createElement("tr");
+  const leaderboardTh1 = document.createElement("th");
+  leaderboardTh1.innerText = "Username";
+  const leaderboardTh2 = document.createElement("th");
+  leaderboardTh2.innerText = "Credit";
+  const leaderboardTbody = document.createElement("tbody");
+
+  let orderedUsers = users.sort((a,b) => (a.credit < b.credit) ? 1 : ((b.credit < a.credit) ? -1 : 0));
+
+  orderedUsers.forEach(user => {
+    const leaderboardBodyTr = document.createElement("tr")
+    const leaderboardTd1 = document.createElement("td")
+    leaderboardTd1.innerText = user.username
+    const leaderboardTd2 = document.createElement("td")
+    leaderboardTd2.innerText = user.credit
+
+    leaderboardTbody.appendChild(leaderboardBodyTr)
+    leaderboardBodyTr.append(leaderboardTd1, leaderboardTd2)
+  })
+
+  leaderboardDiv.appendChild(leaderboardTable);
+  leaderboardTable.append(leaderboardThead, leaderboardTbody);
+  leaderboardThead.appendChild(leaderboardTr);
+  leaderboardTr.append(leaderboardTh1, leaderboardTh2);
+};
+
 renderWelcomePage = user => {
   while (formDiv.firstChild) {
     formDiv.firstChild.remove();
   }
-
   if (slotMachineHeaderDiv.childElementCount !== 0) {
     while (slotMachineHeaderDiv.firstChild) {
       slotMachineHeaderDiv.firstChild.remove();
+    }
+  }
+  if (leaderboardDiv.childElementCount !== 0) {
+    while (leaderboardDiv.firstChild) {
+      leaderboardDiv.firstChild.remove();
     }
   }
 
@@ -140,6 +181,9 @@ renderWelcomePage = user => {
 
   slotMachineHeaderDiv.append(newH2, spinButton);
   renderBetAmts(user);
+
+  API.get(usersUrl).then(renderLeaderboard);
+
   spinButton.addEventListener("click", event => {
     if (user.credit >= 10) {
       renderSlotMachine(user);
@@ -148,6 +192,8 @@ renderWelcomePage = user => {
     }
   });
 };
+
+// display form
 
 handleSubmit = event => {
   event.preventDefault();
@@ -181,5 +227,6 @@ displayForm = event => {
   newForm.addEventListener("submit", handleSubmit);
 };
 
-// EVENT LISTENERS
+////////////////////// EVENT LISTENERS //////////////////////
+
 document.body.onload = displayForm;
