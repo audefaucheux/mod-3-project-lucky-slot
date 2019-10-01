@@ -35,6 +35,7 @@ const slotMachineResultMessageDiv = document.querySelector(
   "div#game-result-message"
 );
 const leaderboardDiv = document.querySelector("div#leaderboard-table");
+const loginDiv = document.querySelector("div#back-to-login")
 
 ////////////////////// FUNCTIONS //////////////////////
 
@@ -118,13 +119,21 @@ renderSlotMachine = user => {
     slotMachineDiv.firstChild.remove();
   }
 
+  let randomNumberDivContainer = document.createElement("div")
+  randomNumberDivContainer.className = "container"
+  let randomNumberDivRow = document.createElement("div")
+  randomNumberDivRow.className = "row"
   let randomNumberArray = getRandomNumber();
 
   randomNumberArray.forEach(element => {
-    let randomNumberP = document.createElement("p");
-    randomNumberP.innerText = element;
-    slotMachineDiv.appendChild(randomNumberP);
+    let randomNumberDivCol = document.createElement("div");
+    randomNumberDivCol.className = "col-sm"
+    randomNumberDivCol.innerText = element;
+    randomNumberDivRow.appendChild(randomNumberDivCol);
   });
+
+  slotMachineDiv.append(randomNumberDivContainer)
+  randomNumberDivContainer.append(randomNumberDivRow)
   getResult(randomNumberArray, user);
 };
 
@@ -183,6 +192,12 @@ renderWelcomePage = user => {
 
   slotMachineHeaderDiv.append(newH2, spinButton);
   renderBetAmts(user);
+
+  
+  let loginBtn = document.createElement("button")
+  loginBtn.innerText = "Log Out"
+  loginDiv.append(loginBtn)
+  loginBtn.addEventListener("click", () => location.reload())
 
   API.get(usersUrl).then(renderLeaderboard);
 
