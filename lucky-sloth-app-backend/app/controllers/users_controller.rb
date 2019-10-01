@@ -20,10 +20,7 @@ class UsersController < ApplicationController
     user.update(user_params)
     render json: user
   end
-
-  def delete
-  end
-
+  
   private
 
   def user_params
