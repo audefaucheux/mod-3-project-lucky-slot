@@ -1,10 +1,24 @@
+@font-face {
+  font-family: "quite_magicalregular";
+  src: url("fonts/quite_magical_-_ttf-webfont.woff2") format("woff2"),
+    url("fonts/quite_magical_-_ttf-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
 h1 {
   color: blue;
+  font-family: "quite_magicalregular" !important;
+  font-size: 80px !important;
+}
+
+h2 {
+  font-family: "quite_magicalregular" !important;
+  font-size: 60px !important;
 }
 
 body {
-  text-align: center;
-  font-family: arial;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif !important;
 }
 
 table {
@@ -12,7 +26,16 @@ table {
   width: 500px !important;
 }
 
-button {
+.slot-machine-border {
+  border: thick double;
+}
+
+div#slot-machine {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+#slot-machine-header div button {
   margin-left: 10px !important;
 }
 
@@ -34,11 +57,10 @@ button {
   color: blue;
 }
 
-.slot-machine-border {
-  border: thick double;
+.credit-span {
+  color: blue;
 }
 
-div#slot-machine {
-  margin-top: 40px;
-  margin-bottom: 40px;
+.text {
+  font-size: 30px;
 }
