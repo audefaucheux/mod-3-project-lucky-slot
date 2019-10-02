@@ -39,6 +39,11 @@ const loginDiv = document.querySelector("div#back-to-login");
 const welcomeDiv = document.querySelector("div#welcome")
 const slothImageArray = ["images/sloth-theme/javascript-ninja-sloth.png", "images/sloth-theme/ninja-sloth.png", "images/sloth-theme/red-ninja-sloth.png" ]
 
+
+//Angie
+const image1Div = document.querySelector("#image-1")
+const image2Div = document.querySelector("#image-2")
+const image3Div = document.querySelector("#image-3")
 ////////////////////// FUNCTIONS //////////////////////
 
 // handle slot result
@@ -68,10 +73,13 @@ renderBetAmts = user => {
   betHeader.id = "bet-header";
   let betDecrementBtn = document.createElement("button");
   betDecrementBtn.innerText = "-";
+  betDecrementBtn.className ="btn btn-primary"
   let betIncrementBtn = document.createElement("button");
   betIncrementBtn.innerText = "+";
+  betIncrementBtn.className ="btn btn-primary"
   let betMaxBtn = document.createElement("button");
   betMaxBtn.innerText = "Bet MAX";
+  betMaxBtn.className ="btn btn-primary"
   slotMachineHeaderDiv.append(betDiv);
   betDiv.append(betHeader, betDecrementBtn, betIncrementBtn, betMaxBtn);
   let betMax = user.credit;
@@ -115,29 +123,27 @@ getRandomNumber = () => {
 
 // display game screen
 
+renderImage = (index, imagediv) => {
+  let image = document.createElement("img")
+  image.src = slothImageArray[index]
+  imagediv.append(image)
+}
+
 renderSlotMachine = user => {
-  while (slotMachineDiv.firstChild) {
-    slotMachineDiv.firstChild.remove();
-  }
+  //Angie
+  if(image1Div.firstChild) {image1Div.firstChild.remove()}
+  if(image2Div.firstChild) {image2Div.firstChild.remove()}
+  if(image3Div.firstChild) {image3Div.firstChild.remove()}
 
-  let randomNumberDivContainer = document.createElement("div");
-  randomNumberDivContainer.className = "container";
-  let randomNumberDivRow = document.createElement("div");
-  randomNumberDivRow.className = "row";
-  let randomNumberArray = getRandomNumber();
 
-  randomNumberArray.forEach(element => {
-    let randomNumberDivCol = document.createElement("div");
-    randomNumberDivCol.className = "col-sm";
-    let image = document.createElement("img")
-    image.src = slothImageArray[element]
-    randomNumberDivCol.append(image)
-    randomNumberDivRow.appendChild(randomNumberDivCol);
-  });
 
-  slotMachineDiv.append(randomNumberDivContainer);
-  randomNumberDivContainer.append(randomNumberDivRow);
-  getResult(randomNumberArray, user);
+  let randomNumberArray = getRandomNumber(); //final results array e.g. [2.1.2]
+
+   
+  setTimeout(() => renderImage(randomNumberArray[0], image1Div), 500)
+  setTimeout(() => renderImage(randomNumberArray[1], image2Div), 1000)
+ setTimeout(() => renderImage(randomNumberArray[2], image3Div), 1700)
+  setTimeout(() => getResult(randomNumberArray, user), 2000) ;
 };
 
 // display leaderboard//
