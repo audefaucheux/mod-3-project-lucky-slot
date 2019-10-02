@@ -36,14 +36,17 @@ const slotMachineResultMessageDiv = document.querySelector(
 );
 const leaderboardDiv = document.querySelector("div#leaderboard-table");
 const loginDiv = document.querySelector("div#back-to-login");
-const welcomeDiv = document.querySelector("div#welcome")
-const slothImageArray = ["images/sloth-theme/javascript-ninja-sloth.png", "images/sloth-theme/ninja-sloth.png", "images/sloth-theme/red-ninja-sloth.png" ]
-
+const welcomeDiv = document.querySelector("div#welcome");
+const slothImageArray = [
+  "images/sloth-theme/javascript-ninja-sloth.png",
+  "images/sloth-theme/ninja-sloth.png",
+  "images/sloth-theme/red-ninja-sloth.png"
+];
 
 //Angie
-const image1Div = document.querySelector("#image-1")
-const image2Div = document.querySelector("#image-2")
-const image3Div = document.querySelector("#image-3")
+const image1Div = document.querySelector("#image-1");
+const image2Div = document.querySelector("#image-2");
+const image3Div = document.querySelector("#image-3");
 ////////////////////// FUNCTIONS //////////////////////
 
 // handle slot result
@@ -73,13 +76,13 @@ renderBetAmts = user => {
   betHeader.id = "bet-header";
   let betDecrementBtn = document.createElement("button");
   betDecrementBtn.innerText = "-";
-  betDecrementBtn.className ="btn btn-primary"
+  betDecrementBtn.className = "btn btn-primary";
   let betIncrementBtn = document.createElement("button");
   betIncrementBtn.innerText = "+";
-  betIncrementBtn.className ="btn btn-primary"
+  betIncrementBtn.className = "btn btn-primary";
   let betMaxBtn = document.createElement("button");
   betMaxBtn.innerText = "Bet MAX";
-  betMaxBtn.className ="btn btn-primary"
+  betMaxBtn.className = "btn btn-primary";
   slotMachineHeaderDiv.append(betDiv);
   betDiv.append(betHeader, betDecrementBtn, betIncrementBtn, betMaxBtn);
   let betMax = user.credit;
@@ -124,69 +127,80 @@ getRandomNumber = () => {
 // display game screen
 
 renderImage = (index, imagediv) => {
-  let image = document.createElement("img")
-  image.src = slothImageArray[index]
-  imagediv.append(image)
-}
+  let image = document.createElement("img");
+  image.src = slothImageArray[index];
+  imagediv.append(image);
+};
 
 renderSlotMachine = user => {
   //Angie
-  if(image1Div.firstChild) {image1Div.firstChild.remove()}
-  if(image2Div.firstChild) {image2Div.firstChild.remove()}
-  if(image3Div.firstChild) {image3Div.firstChild.remove()}
-
-
+  if (image1Div.firstChild) {
+    image1Div.firstChild.remove();
+  }
+  if (image2Div.firstChild) {
+    image2Div.firstChild.remove();
+  }
+  if (image3Div.firstChild) {
+    image3Div.firstChild.remove();
+  }
 
   let randomNumberArray = getRandomNumber(); //final results array e.g. [2.1.2]
 
-   
-  setTimeout(() => renderImage(randomNumberArray[0], image1Div), 500)
-  setTimeout(() => renderImage(randomNumberArray[1], image2Div), 1000)
- setTimeout(() => renderImage(randomNumberArray[2], image3Div), 1700)
-  setTimeout(() => getResult(randomNumberArray, user), 2000) ;
+  setTimeout(() => renderImage(randomNumberArray[0], image1Div), 500);
+  setTimeout(() => renderImage(randomNumberArray[1], image2Div), 1000);
+  setTimeout(() => renderImage(randomNumberArray[2], image3Div), 1700);
+  setTimeout(() => getResult(randomNumberArray, user), 2000);
 };
 
 // display leaderboard//
 
 renderLeaderboard = users => {
+  const leaderboardHeader = document.createElement("h2");
+  leaderboardHeader.innerText = "Leaderboard";
   const leaderboardTable = document.createElement("table");
-  // leaderboardTable.className = "table table-striped"
+  leaderboardTable.className = "table table-striped table-bordered";
   const leaderboardThead = document.createElement("thead");
   const leaderboardTr = document.createElement("tr");
   const leaderboardTh1 = document.createElement("th");
-  leaderboardTh1.innerText = "Username";
+  leaderboardTh1.innerText = "Rank";
   const leaderboardTh2 = document.createElement("th");
-  leaderboardTh2.innerText = "Credit";
+  leaderboardTh2.innerText = "Username";
+  const leaderboardTh3 = document.createElement("th");
+  leaderboardTh3.innerText = "Credit";
   const leaderboardTbody = document.createElement("tbody");
 
   let orderedUsers = users.sort((a, b) =>
     a.credit < b.credit ? 1 : b.credit < a.credit ? -1 : 0
   );
 
-  orderedUsers.slice(0, 9).forEach(user => {
+  let top10Users = orderedUsers.slice(0, 9);
+
+  for (let i = 0; i < top10Users.length; i++) {
     const leaderboardBodyTr = document.createElement("tr");
     const leaderboardTd1 = document.createElement("td");
-    leaderboardTd1.innerText = user.username;
+    leaderboardTd1.innerText = i + 1;
     const leaderboardTd2 = document.createElement("td");
-    leaderboardTd2.innerText = user.credit;
+    leaderboardTd2.innerText = top10Users[i].username;
+    const leaderboardTd3 = document.createElement("td");
+    leaderboardTd3.innerText = `£${top10Users[i].credit}`;
 
     leaderboardTbody.appendChild(leaderboardBodyTr);
-    leaderboardBodyTr.append(leaderboardTd1, leaderboardTd2);
-  });
+    leaderboardBodyTr.append(leaderboardTd1, leaderboardTd2, leaderboardTd3);
+  }
 
-  leaderboardDiv.appendChild(leaderboardTable);
+  leaderboardDiv.append(leaderboardHeader, leaderboardTable);
   leaderboardTable.append(leaderboardThead, leaderboardTbody);
   leaderboardThead.appendChild(leaderboardTr);
-  leaderboardTr.append(leaderboardTh1, leaderboardTh2);
+  leaderboardTr.append(leaderboardTh1, leaderboardTh2, leaderboardTh3);
 };
-// welcome page 
+// welcome page
 renderWelcomePage = user => {
   while (formDiv.firstChild) {
     formDiv.firstChild.remove();
   }
-  
+
   if (welcomeDiv.childElementCount !== 0) {
-    welcomeDiv.firstChild.remove()
+    welcomeDiv.firstChild.remove();
   }
 
   while (loginDiv.firstChild) {
@@ -244,10 +258,10 @@ handleSubmit = username => {
 };
 
 displayForm = event => {
-  const welcomeHeader = document.createElement("h1")
-  welcomeHeader.innerText = "Welcome to the Lucky Sloth!"
-  welcomeDiv.append(welcomeHeader)
-  
+  const welcomeHeader = document.createElement("h1");
+  welcomeHeader.innerText = "Welcome to the Lucky Sloth!";
+  welcomeDiv.append(welcomeHeader);
+
   const newForm = document.createElement("form");
   newForm.setAttribute("id", "create-user-form");
 

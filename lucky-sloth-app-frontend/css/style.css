@@ -2,14 +2,6 @@ h1 {
   color: blue;
 }
 
-
-
-.col-sm {
-
-  width: 50px;
-
-}
-
 body {
   text-align: center;
   font-family: arial; 
@@ -17,6 +9,6 @@ body {
 
 table {
     margin: 0 auto;
-    text-align: center;
+    width: 500px !important;
 }
 
