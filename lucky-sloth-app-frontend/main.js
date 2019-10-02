@@ -233,6 +233,7 @@ renderWelcomePage = user => {
   loginDiv.append(loginBtn);
   loginBtn.addEventListener("click", () => location.reload());
 
+  !slotMachineResultMessageDiv.firstChild ? slotMachineResultMessageDiv.innerText = "Spin to play !!" : slotMachineResultMessageDiv
   API.get(usersUrl).then(renderLeaderboard);
 
   spinButton.addEventListener("click", event => {
