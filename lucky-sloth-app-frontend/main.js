@@ -31,6 +31,7 @@ const formDiv = document.querySelector("div#form");
 const gameDiv = document.querySelector("div#game-screen");
 const slotMachineHeaderDiv = document.querySelector("div#slot-machine-header");
 const slotMachineDiv = document.querySelector("div#slot-machine");
+const spinButtonDiv = document.querySelector("div#spin-button");
 const slotMachineResultMessageDiv = document.querySelector(
   "div#game-result-message"
 );
@@ -42,11 +43,12 @@ const slothImageArray = [
   "images/sloth-theme/ninja-sloth.png",
   "images/sloth-theme/red-ninja-sloth.png"
 ];
+const spinButtonImage = "images/game/start-button.jpg";
+const image1 = document.querySelector("#image-1 img");
+const image2 = document.querySelector("#image-2 img");
+const image3 = document.querySelector("#image-3 img");
+const questionMarkBear = "images/game/question-bear_dribbble.png"
 
-//Angie
-const image1Div = document.querySelector("#image-1");
-const image2Div = document.querySelector("#image-2");
-const image3Div = document.querySelector("#image-3");
 ////////////////////// FUNCTIONS //////////////////////
 
 // handle slot result
@@ -70,13 +72,18 @@ getResult = (randomNumberArray, user) => {
   }
 };
 
+// render betting menu
+
 renderBetAmts = user => {
   let betDiv = document.createElement("div");
-  let betHeader = document.createElement("h3");
+  let betHeader = document.createElement("strong");
   betHeader.id = "bet-header";
+  betHeader.innerText = "Bet amount: ";
+  let betSpan = document.createElement("span");
   let betDecrementBtn = document.createElement("button");
   betDecrementBtn.innerText = "-";
   betDecrementBtn.className = "btn btn-primary";
+  betDecrementBtn.disabled = true;
   let betIncrementBtn = document.createElement("button");
   betIncrementBtn.innerText = "+";
   betIncrementBtn.className = "btn btn-primary";
@@ -85,34 +92,41 @@ renderBetAmts = user => {
   betMaxBtn.className = "btn btn-primary";
   slotMachineHeaderDiv.append(betDiv);
   betDiv.append(betHeader, betDecrementBtn, betIncrementBtn, betMaxBtn);
+  betHeader.append(betSpan);
   let betMax = user.credit;
   let betMin = 10;
   let betAmount = betMin;
+
   //placeholder
   betHeader.dataset.id = betAmount;
-  betHeader.innerText = `You are betting ${betAmount}`;
+  betSpan.innerText = betAmount;
   betDecrementBtn.addEventListener("click", () => {
+    betIncrementBtn.disabled = false;
     if (betAmount >= 20) {
       betAmount = betAmount - 10;
       betHeader.dataset.id = betAmount;
-      betHeader.innerText = `You are betting ${betAmount}`;
-    } else {
-      alert(`The Minimum Bet is £${betMin}`);
+      betSpan.innerText = betAmount;
+      betAmount === 10
+        ? (betDecrementBtn.disabled = true)
+        : (betDecrementBtn.disabled = false);
     }
   });
   betIncrementBtn.addEventListener("click", () => {
-    if (betAmount >= betMax) {
-      alert(`The Maximum Bet is £${betMax}`);
-    } else {
-      betAmount = betAmount + 10;
-      betHeader.dataset.id = betAmount;
-      betHeader.innerText = `You are betting ${betAmount}`;
+    betDecrementBtn.disabled = false;
+    betAmount = betAmount + 10;
+    betHeader.dataset.id = betAmount;
+    betSpan.innerText = betAmount;
+
+    if (betAmount === betMax) {
+      betIncrementBtn.disabled = true;
     }
   });
   betMaxBtn.addEventListener("click", () => {
+    betDecrementBtn.disabled = false;
+    betIncrementBtn.disabled = true;
     betAmount = betMax;
     betHeader.dataset.id = betAmount;
-    betHeader.innerText = `You are betting ${betAmount}`;
+    betSpan.innerText = betAmount;
   });
 };
 
@@ -126,29 +140,19 @@ getRandomNumber = () => {
 
 // display game screen
 
-renderImage = (index, imagediv) => {
-  let image = document.createElement("img");
+renderImage = (index, image) => {
   image.src = slothImageArray[index];
-  imagediv.append(image);
 };
 
 renderSlotMachine = user => {
-  //Angie
-  if (image1Div.firstChild) {
-    image1Div.firstChild.remove();
-  }
-  if (image2Div.firstChild) {
-    image2Div.firstChild.remove();
-  }
-  if (image3Div.firstChild) {
-    image3Div.firstChild.remove();
-  }
-
   let randomNumberArray = getRandomNumber(); //final results array e.g. [2.1.2]
 
-  setTimeout(() => renderImage(randomNumberArray[0], image1Div), 500);
-  setTimeout(() => renderImage(randomNumberArray[1], image2Div), 1000);
-  setTimeout(() => renderImage(randomNumberArray[2], image3Div), 1700);
+  image1.src = questionMarkBear
+  image2.src = questionMarkBear
+  image3.src = questionMarkBear
+  setTimeout(() => renderImage(randomNumberArray[0], image1), 500);
+  setTimeout(() => renderImage(randomNumberArray[1], image2), 1000);
+  setTimeout(() => renderImage(randomNumberArray[2], image3), 1700);
   setTimeout(() => getResult(randomNumberArray, user), 2000);
 };
 
@@ -193,39 +197,35 @@ renderLeaderboard = users => {
   leaderboardThead.appendChild(leaderboardTr);
   leaderboardTr.append(leaderboardTh1, leaderboardTh2, leaderboardTh3);
 };
+
 // welcome page
+
+removeDivChildren = div => {
+  while (div.firstChild) {
+    div.firstChild.remove();
+  }
+};
+
 renderWelcomePage = user => {
-  while (formDiv.firstChild) {
-    formDiv.firstChild.remove();
-  }
+  removeDivChildren(formDiv);
+  removeDivChildren(welcomeDiv);
+  removeDivChildren(loginDiv);
+  removeDivChildren(slotMachineHeaderDiv);
+  removeDivChildren(leaderboardDiv);
+  removeDivChildren(spinButtonDiv);
 
-  if (welcomeDiv.childElementCount !== 0) {
-    welcomeDiv.firstChild.remove();
-  }
-
-  while (loginDiv.firstChild) {
-    loginDiv.firstChild.remove();
-  }
-
-  if (slotMachineHeaderDiv.childElementCount !== 0) {
-    while (slotMachineHeaderDiv.firstChild) {
-      slotMachineHeaderDiv.firstChild.remove();
-    }
-  }
-  if (leaderboardDiv.childElementCount !== 0) {
-    while (leaderboardDiv.firstChild) {
-      leaderboardDiv.firstChild.remove();
-    }
-  }
+  slotMachineDiv.style.visibility = "visible";
 
   let newH2 = document.createElement("h2");
   newH2.setAttribute("data-user-id", user.id);
   newH2.innerText = `Hi ${user.username}. Your current credit is £${user.credit}`;
 
-  let spinButton = document.createElement("button");
-  spinButton.innerText = "SPIN";
+  let spinButton = document.createElement("img");
+  spinButton.src = spinButtonImage;
+  spinButton.className = "spin-button";
 
-  slotMachineHeaderDiv.append(newH2, spinButton);
+  slotMachineHeaderDiv.append(newH2);
+  spinButtonDiv.append(spinButton);
   renderBetAmts(user);
 
   let loginBtn = document.createElement("button");
@@ -258,6 +258,8 @@ handleSubmit = username => {
 };
 
 displayForm = event => {
+  slotMachineDiv.style.visibility = "hidden";
+
   const welcomeHeader = document.createElement("h1");
   welcomeHeader.innerText = "Welcome to the Lucky Sloth!";
   welcomeDiv.append(welcomeHeader);
