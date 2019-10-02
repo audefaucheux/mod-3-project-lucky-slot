@@ -249,7 +249,7 @@ renderWelcomePage = user => {
   if (!slotMachineResultMessageDiv.firstChild) {
     let messageP = document.createElement("p");
     messageP.className = "text";
-    messageP.innerText = "⬇️⬇️⬇️ Spin to play !! ⬇️⬇️⬇️";
+    messageP.innerText = "⬆️⬆️⬆️ Spin to play !! ⬆️⬆️⬆️";
     slotMachineResultMessageDiv.appendChild(messageP);
   }
   API.get(usersUrl).then(renderLeaderboard);
