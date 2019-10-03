@@ -65,10 +65,15 @@ const slothImageCollection = {
     "images/south-park/cartman.png",
     "images/south-park/Jimmy.png",
   ],
-  "Zombie-Theme" : [
+  "Zombie-Theme": [
     "images/zombie-theme/zombie1.jpg",
     "images/zombie-theme/zombie2.jpg",
     "images/zombie-theme/zombie3.jpg",
+  ], 
+  "Harry-Potter-Theme": [
+    "images/harry-potter-theme/harrypotter.png", 
+    "images/harry-potter-theme/harrypotter2.png", 
+    "images/harry-potter-theme/harrypotter3.png", 
   ]
 };
 const spinButtonImage = "images/game/spinbutton.png";
@@ -351,6 +356,8 @@ displayForm = event => {
   addOptionsToDropDown("Duck Theme")
   addOptionsToDropDown("South Park Theme")
   addOptionsToDropDown("Zombie Theme")
+  addOptionsToDropDown("Harry Potter Theme")
+
 
   newForm.addEventListener("submit", validateForm);
 };
