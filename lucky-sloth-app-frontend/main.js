@@ -41,6 +41,7 @@ const slotMachineResultMessageDiv = document.querySelector(
 const leaderboardDiv = document.querySelector("div#leaderboard-table");
 const loginDiv = document.querySelector("div#back-to-login");
 const welcomeDiv = document.querySelector("div#welcome");
+const audio = new Audio('sounds/slotmachinesound.wav')
 
 //images
 const slothImageArray = [
@@ -69,7 +70,7 @@ getResult = (randomNumberArray, user) => {
   let bet = document.querySelector("#bet-header").dataset.id;
   let betNum = parseInt(bet);
   if (uniqueNumberArray.length === 1) {
-    let newCredit = user.credit + betNum * 5;
+    let newCredit = user.credit + betNum * 10;
     slotMachineResultMessageDiv.appendChild(messageP);
     messageP.innerText = "YOU WON ! 🥇";
     updateUsersCredit(newCredit, user);
@@ -165,8 +166,8 @@ renderSlotMachine = user => {
   image3.className = "animated infinite shake"
   setTimeout(() => renderImage(randomNumberArray[0], image1), 1000);
   setTimeout(() => renderImage(randomNumberArray[1], image2), 1400);
-  setTimeout(() => renderImage(randomNumberArray[2], image3), 1900);
-  setTimeout(() => getResult(randomNumberArray, user), 2000);
+  setTimeout(() => renderImage(randomNumberArray[2], image3), 2000);
+  setTimeout(() => getResult(randomNumberArray, user), 2100);
 };
 
 // display leaderboard//
@@ -240,6 +241,7 @@ renderWelcomePage = user => {
   spinButton.src = spinButtonImage;
   spinButton.className = "spin-button";
 
+
   slotMachineHeaderDiv.append(newH2);
   newH2.append(newSpan);
   spinButtonDiv.append(spinButton);
@@ -259,7 +261,11 @@ renderWelcomePage = user => {
   }
   API.get(usersUrl).then(renderLeaderboard);
 
+
+
   spinButton.addEventListener("click", event => {
+    spinButton.className = "animated pulse spin-button"
+    audio.play() 
     if (user.credit >= 10) {
       renderSlotMachine(user);
     } else {
