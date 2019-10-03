@@ -46,6 +46,9 @@ const image2Div = document.querySelector("div#image-2")
 const image3Div = document.querySelector("div#image-3")
 let userTheme = ""
 const audio = new Audio('sounds/slotmachinesound.wav')
+const loseaudio = new Audio('sounds/lose.mp3')
+const winaudio = new Audio('sounds/winaudio.wav')
+
 
 
 //images
@@ -97,7 +100,7 @@ const slothImageCollection = {
 // handle slot result
 
 function updateUsersCredit(userData, user) {
-  API.patch(usersUrl, user.id, { credit: userData }).then(renderWelcomePage);
+  API.patch(usersUrl, user.id, { credit: userData }).then(checkGameOver);
 }
 
 getResult = (randomNumberArray, user) => {  
@@ -105,7 +108,9 @@ getResult = (randomNumberArray, user) => {
   let bet = document.querySelector("#bet-header").dataset.id;
   let betNum = parseInt(bet);
   if (uniqueNumberArray.length === 1) {
-    let newCredit = user.credit + betNum * 5;
+    renderConfetti()
+    winaudio.play()
+    let newCredit = user.credit + betNum * 10;
     slotMachineResultMessageDiv.innerHTML = "🥇🥇🥇<span class='text-magical'> YOU WON ! </span>🥇🥇🥇"
     updateUsersCredit(newCredit, user);
   } else {
@@ -114,6 +119,22 @@ getResult = (randomNumberArray, user) => {
     updateUsersCredit(newCredit, user);
   }
 };
+
+
+checkGameOver = (user) => {
+  if (user.credit === 0) {
+  removeDivChildren(spinButtonDiv)
+  removeDivChildren(slotMachineHeaderDiv)
+  header = document.createElement("h2")
+  loseaudio.play()
+  header.innerText = `Game Over!  You've run out of credits!`
+  header.style.color = "darkmagenta"
+  slotMachineHeaderDiv.append(header)
+  } else {
+    renderWelcomePage(user)
+  }
+}
+
 
 // render betting menu
 
@@ -364,7 +385,7 @@ displayForm = event => {
   buttonSubDiv.className = "form-container-items"
   const submitButton = document.createElement("input");
   submitButton.type = "submit";
-  submitButton.className = "form-container-items btn btn-success"
+  submitButton.className = "form-container-items btn btn-info"
   submitButton.value = "Create User";
 
   const moneySlothGif = document.createElement("img")
@@ -402,3 +423,25 @@ validateForm = event => {
 //////////////////////////////////////////// EVENT LISTENERS ////////////////////////////////////////////
 
 document.body.onload = displayForm;
+
+
+// confetti
+const renderConfetti = () => {
+  let end = Date.now() + (1 * 1000);
+ let interval = setInterval(function() {
+    if (Date.now() > end) {
+        return clearInterval(interval);
+    }
+    confetti({
+        startVelocity: 30,
+        spread: 360,
+        ticks: 60,
+        shapes: ['square'],
+        origin: {
+            x: Math.random(),
+            // since they fall down, start a bit higher than random
+            y: Math.random() - 0.2
+        }
+    });
+ }, 200);
+ }
