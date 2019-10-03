@@ -45,6 +45,8 @@ const image1Div = document.querySelector("div#image-1")
 const image2Div = document.querySelector("div#image-2")
 const image3Div = document.querySelector("div#image-3")
 let userTheme = ""
+const audio = new Audio('sounds/slotmachinesound.wav')
+
 
 //images
 const slothImageCollection = {
@@ -62,6 +64,11 @@ const slothImageCollection = {
     "images/south-park/ButtersStotch.png",
     "images/south-park/cartman.png",
     "images/south-park/Jimmy.png",
+  ],
+  "Zombie-Theme" : [
+    "images/zombie-theme/zombie1.jpg",
+    "images/zombie-theme/zombie2.jpg",
+    "images/zombie-theme/zombie3.jpg",
   ]
 };
 const spinButtonImage = "images/game/spinbutton.png";
@@ -282,6 +289,8 @@ renderWelcomePage = user => {
   API.get(usersUrl).then(renderLeaderboard);
 
   spinButton.addEventListener("click", event => {
+    audio.play()
+    spinButton.className = "spin-button animated tada"
     if (user.credit >= 10) {
       renderSlotMachine(user);
     } else {
@@ -341,6 +350,7 @@ displayForm = event => {
   addOptionsToDropDown("Sloth Theme")
   addOptionsToDropDown("Duck Theme")
   addOptionsToDropDown("South Park Theme")
+  addOptionsToDropDown("Zombie Theme")
 
   newForm.addEventListener("submit", validateForm);
 };
