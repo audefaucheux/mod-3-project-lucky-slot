@@ -49,7 +49,7 @@ div#slot-machine {
 }
 
 .slot-images-size img {
-  height: 164px;
+  height: 160px;
 }
 
 #slot-machine-header div button {
@@ -86,4 +86,8 @@ div#slot-machine {
 .text-magical {
   font-family: "quite_magicalregular" !important;
   font-size: 60px;
+}
+
+.form-element {
+  margin-right: 10px;
 }
