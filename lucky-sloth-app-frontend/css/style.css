@@ -7,7 +7,7 @@
 }
 
 h1 {
-  color: blue;
+  color: seagreen;
   font-family: "quite_magicalregular" !important;
   font-size: 80px !important;
 }
@@ -24,6 +24,10 @@ body {
 table {
   margin: 0 auto;
   width: 500px !important;
+}
+
+input, select {
+  height: 35px;
 }
 
 div#slot-machine {
@@ -72,11 +76,11 @@ div#slot-machine {
 }
 
 #bet-header span {
-  color: blue;
+  color: seagreen;
 }
 
 .credit-span {
-  color: blue;
+  color: seagreen;
 }
 
 .text {
@@ -88,6 +92,13 @@ div#slot-machine {
   font-size: 60px;
 }
 
-.form-element {
-  margin-right: 10px;
+.form-container {
+  padding: 3% 44.5%;
+  flex-direction: column;
+  text-align: left;
+}
+
+.form-container-items {
+  margin-top: 15px;
+  border-radius: 6px;
 }
