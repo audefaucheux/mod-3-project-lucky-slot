@@ -7,7 +7,6 @@
 }
 
 h1 {
-  color: seagreen;
   font-family: "quite_magicalregular" !important;
   font-size: 80px !important;
 }
@@ -19,6 +18,9 @@ h2 {
 
 body {
   font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif !important;
+  /* background-image: url("../images/sloth-theme/flying-sloth.jpg");
+  background-repeat: no-repeat; */
+  /* background-size: 100% */
 }
 
 table {
@@ -28,6 +30,10 @@ table {
 
 input, select {
   height: 35px;
+}
+
+h1, #bet-header span, .credit-span {
+  color: seagreen;
 }
 
 div#slot-machine {
@@ -68,20 +74,12 @@ div#slot-machine {
 #bet-amount-input {
   width: 50px;
   margin-right: 10px;
-  margin-right: 10px;
 }
 
 #bet-header {
   font-size: 26px;
 }
 
-#bet-header span {
-  color: seagreen;
-}
-
-.credit-span {
-  color: seagreen;
-}
 
 .text {
   font-size: 30px;
