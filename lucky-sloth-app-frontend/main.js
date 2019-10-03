@@ -41,6 +41,9 @@ const slotMachineResultMessageDiv = document.querySelector(
 const leaderboardDiv = document.querySelector("div#leaderboard-table");
 const loginDiv = document.querySelector("div#back-to-login");
 const welcomeDiv = document.querySelector("div#welcome");
+const image1Div = document.querySelector("div#image-1")
+const image2Div = document.querySelector("div#image-2")
+const image3Div = document.querySelector("div#image-3")
 
 //images
 const slothImageArray = [
@@ -48,11 +51,11 @@ const slothImageArray = [
   "images/sloth-theme/ninja-sloth.png",
   "images/sloth-theme/red-ninja-sloth.png"
 ];
-const spinButtonImage = "images/game/spinbutton.jpg";
+const spinButtonImage = "images/game/spinbutton.png";
 const questionMarkBear = "images/game/question-bear_dribbble.png";
-const image1 = document.querySelector("#image-1 img");
-const image2 = document.querySelector("#image-2 img");
-const image3 = document.querySelector("#image-3 img");
+let image1 = document.querySelector("#image-1 img");
+let image2 = document.querySelector("#image-2 img");
+let image3 = document.querySelector("#image-3 img");
 
 ////////////////////// FUNCTIONS //////////////////////
 
@@ -62,20 +65,17 @@ function updateUsersCredit(userData, user) {
   API.patch(usersUrl, user.id, { credit: userData }).then(renderWelcomePage);
 }
 
-getResult = (randomNumberArray, user) => {
-  const messageP = slotMachineResultMessageDiv.querySelector("p");
-
+getResult = (randomNumberArray, user) => {  
   let uniqueNumberArray = [...new Set(randomNumberArray)];
   let bet = document.querySelector("#bet-header").dataset.id;
   let betNum = parseInt(bet);
   if (uniqueNumberArray.length === 1) {
     let newCredit = user.credit + betNum * 5;
-    slotMachineResultMessageDiv.appendChild(messageP);
-    messageP.innerText = "YOU WON ! 🥇";
+    slotMachineResultMessageDiv.innerHTML = "🥇🥇🥇<span class='text-magical'> YOU WON ! </span>🥇🥇🥇"
     updateUsersCredit(newCredit, user);
   } else {
     let newCredit = user.credit - betNum;
-    messageP.innerText = "You lost 😢";
+    slotMachineResultMessageDiv.innerHTML = "<span class='text-magical'>You lost </span> 😢"
     updateUsersCredit(newCredit, user);
   }
 };
@@ -155,8 +155,7 @@ renderImage = (index, image) => {
 
 renderSlotMachine = user => {
   let randomNumberArray = getRandomNumber(); //final results array e.g. [2.1.2]
-  const messageP = slotMachineResultMessageDiv.querySelector("p");
-  messageP.innerText = 'Spinning...'
+  slotMachineResultMessageDiv.innerHTML = "<span class='text-magical'>Spinning...</span> ⌛"
   image1.src = questionMarkBear;
   image2.src = questionMarkBear;
   image3.src = questionMarkBear;
@@ -252,11 +251,21 @@ renderWelcomePage = user => {
   loginBtn.addEventListener("click", () => location.reload());
 
   if (!slotMachineResultMessageDiv.firstChild) {
-    let messageP = document.createElement("p");
-    messageP.className = "text";
-    messageP.innerText = "⬆️⬆️⬆️ Spin to play !! ⬆️⬆️⬆️";
-    slotMachineResultMessageDiv.appendChild(messageP);
+    slotMachineResultMessageDiv.innerHTML = "⬆️⬆️⬆️ <span class='text-magical'>Spin to play !!</span> ⬆️⬆️⬆️"
   }
+
+  if(!image1Div.firstChild) {
+    image1 = document.createElement("img")
+    image1.src = "images/game/question-bear_dribbble.png"
+    image2 = document.createElement("img")
+    image2.src = "images/game/question-bear_dribbble.png"
+    image3 = document.createElement("img")
+    image3.src = "images/game/question-bear_dribbble.png"
+    image1Div.append(image1)
+    image2Div.append(image2)
+    image3Div.append(image3)
+  }
+
   API.get(usersUrl).then(renderLeaderboard);
 
   spinButton.addEventListener("click", event => {
