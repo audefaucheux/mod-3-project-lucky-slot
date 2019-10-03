@@ -150,17 +150,22 @@ getRandomNumber = () => {
 
 renderImage = (index, image) => {
   image.src = slothImageArray[index];
+  image.className = ''
 };
 
 renderSlotMachine = user => {
   let randomNumberArray = getRandomNumber(); //final results array e.g. [2.1.2]
-
+  const messageP = slotMachineResultMessageDiv.querySelector("p");
+  messageP.innerText = 'Spinning...'
   image1.src = questionMarkBear;
   image2.src = questionMarkBear;
   image3.src = questionMarkBear;
-  setTimeout(() => renderImage(randomNumberArray[0], image1), 500);
-  setTimeout(() => renderImage(randomNumberArray[1], image2), 1000);
-  setTimeout(() => renderImage(randomNumberArray[2], image3), 1700);
+  image1.className = "animated infinite shake"
+  image2.className = "animated infinite shake"
+  image3.className = "animated infinite shake"
+  setTimeout(() => renderImage(randomNumberArray[0], image1), 1000);
+  setTimeout(() => renderImage(randomNumberArray[1], image2), 1400);
+  setTimeout(() => renderImage(randomNumberArray[2], image3), 1900);
   setTimeout(() => getResult(randomNumberArray, user), 2000);
 };
 

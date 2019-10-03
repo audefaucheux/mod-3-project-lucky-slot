@@ -36,7 +36,7 @@ div#slot-machine {
   background-repeat: no-repeat;
   background-size: 860px auto;
   margin: 14px auto 0;
-  width: 860px;
+  width: 860px; 
 }
 
 #slot-image-container {
