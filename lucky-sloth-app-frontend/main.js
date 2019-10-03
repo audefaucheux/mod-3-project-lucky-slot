@@ -59,10 +59,16 @@ const slothImageCollection = {
     "images/rubber-duck-theme/watermelon-duck.jpg"
   ],
   "South-Park-Theme": [
-    "images/south-park/ButtersStotch.png",
-    "images/south-park/cartman.png",
-    "images/south-park/Jimmy.png",
+    "images/south-park-theme/ButtersStotch.png",
+    "images/south-park-theme/cartman.png",
+    "images/south-park-theme/Jimmy.png",
+  ],
+  "George-Theme": [
+    "images/george-theme/angry-george.jpg",
+    "images/george-theme/happy-george.jpg",
+    "images/george-theme/silly-george.jpg"
   ]
+
 };
 const spinButtonImage = "images/game/spinbutton.png";
 const questionMarkBear = "images/game/question-bear_dribbble.png";
@@ -321,26 +327,39 @@ displayForm = event => {
   const newForm = document.createElement("form");
   newForm.setAttribute("id", "create-user-form");
 
+  const formContentDiv = document.createElement("div")
+  formContentDiv.className = "form-container"
+  
+  const inputSubDiv = document.createElement("div")
   const usernameInput = document.createElement("input");
   usernameInput.type = "text";
-  usernameInput.className = "form-element"
+  usernameInput.className = "form-container-items"
   usernameInput.placeholder = "enter username...";
 
+  const dropDownSubDiv = document.createElement("div")
+  dropDownSubDiv.className = "form-container-items"
   const themeDropDown = document.createElement("select");
   themeDropDown.id = "theme-dropdown";
-  themeDropDown.className = "form-element"
+  themeDropDown.className = "form-container-items"
 
+  const buttonSubDiv = document.createElement("div")
+  buttonSubDiv.className = "form-container-items"
   const submitButton = document.createElement("input");
   submitButton.type = "submit";
-  submitButton.className = "form-element"
+  submitButton.className = "form-container-items btn btn-success"
   submitButton.value = "Create User";
 
   formDiv.appendChild(newForm);
-  newForm.append(usernameInput, themeDropDown, submitButton);
+  newForm.append(formContentDiv)
+  formContentDiv.append(inputSubDiv, dropDownSubDiv, buttonSubDiv)
+  inputSubDiv.append(usernameInput)
+  dropDownSubDiv.append(themeDropDown)
+  buttonSubDiv.append(submitButton)
 
   addOptionsToDropDown("Sloth Theme")
   addOptionsToDropDown("Duck Theme")
   addOptionsToDropDown("South Park Theme")
+  addOptionsToDropDown("George Theme")
 
   newForm.addEventListener("submit", validateForm);
 };
@@ -349,7 +368,6 @@ validateForm = event => {
   event.preventDefault();
   let username = event.target[0].value;
   userTheme = event.target[1].value;
-  // console.log(userTheme)
   if (username === "") {
     alert("You must enter a username");
   } else {
