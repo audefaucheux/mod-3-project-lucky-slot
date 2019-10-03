@@ -89,6 +89,11 @@ const slothImageCollection = {
     "images/cat-theme/flying-cat.jpg",
     "images/cat-theme/mexican-cat.jpg",
     "images/cat-theme/scared-cat.jpg"
+  ],
+  "Keanu-Theme": [
+    "images/keanu-theme/angry-keanu.jpg",
+    "images/keanu-theme/bill-and-ted-keanu.png",
+    "images/keanu-theme/matrix-keanu.png"
   ]
 };
 
@@ -384,6 +389,7 @@ displayForm = event => {
   addOptionsToDropDown("Harry Potter Theme")
   addOptionsToDropDown("George Theme")
   addOptionsToDropDown("Cat Theme")
+  addOptionsToDropDown("Keanu Theme")
 
   newForm.addEventListener("submit", validateForm);
 };
