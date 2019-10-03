@@ -44,13 +44,26 @@ const welcomeDiv = document.querySelector("div#welcome");
 const image1Div = document.querySelector("div#image-1")
 const image2Div = document.querySelector("div#image-2")
 const image3Div = document.querySelector("div#image-3")
+let userTheme = ""
 
 //images
-const slothImageArray = [
-  "images/sloth-theme/javascript-ninja-sloth.png",
-  "images/sloth-theme/ninja-sloth.png",
-  "images/sloth-theme/red-ninja-sloth.png"
-];
+const slothImageCollection = {
+  "Sloth-Theme": [
+    "images/sloth-theme/javascript-ninja-sloth.png",
+    "images/sloth-theme/ninja-sloth.png",
+    "images/sloth-theme/red-ninja-sloth.png"
+  ],
+  "Duck-Theme": [
+    "images/rubber-duck-theme/cloud-duck.jpg",
+    "images/rubber-duck-theme/polka-dots-duck.jpg",
+    "images/rubber-duck-theme/watermelon-duck.jpg"
+  ],
+  "South-Park-Theme": [
+    "images/south-park/ButtersStotch.png",
+    "images/south-park/cartman.png",
+    "images/south-park/Jimmy.png",
+  ]
+};
 const spinButtonImage = "images/game/spinbutton.png";
 const questionMarkBear = "images/game/question-bear_dribbble.png";
 let image1 = document.querySelector("#image-1 img");
@@ -149,7 +162,7 @@ getRandomNumber = () => {
 // display game screen
 
 renderImage = (index, image) => {
-  image.src = slothImageArray[index];
+  image.src = slothImageCollection[userTheme][index];
   image.className = ''
 };
 
@@ -290,6 +303,14 @@ handleSubmit = username => {
   });
 };
 
+addOptionsToDropDown = (themeName) => {
+  const themeDropDown = document.querySelector("select#theme-dropdown")
+  let newThemeOption = document.createElement("option")
+  newThemeOption.value = themeName.replace(/\s+/g,"-");
+  newThemeOption.innerText = themeName;
+  themeDropDown.append(newThemeOption)
+}
+
 displayForm = event => {
   slotMachineDiv.style.visibility = "hidden";
 
@@ -302,14 +323,24 @@ displayForm = event => {
 
   const usernameInput = document.createElement("input");
   usernameInput.type = "text";
+  usernameInput.className = "form-element"
   usernameInput.placeholder = "enter username...";
+
+  const themeDropDown = document.createElement("select");
+  themeDropDown.id = "theme-dropdown";
+  themeDropDown.className = "form-element"
 
   const submitButton = document.createElement("input");
   submitButton.type = "submit";
+  submitButton.className = "form-element"
   submitButton.value = "Create User";
 
   formDiv.appendChild(newForm);
-  newForm.append(usernameInput, submitButton);
+  newForm.append(usernameInput, themeDropDown, submitButton);
+
+  addOptionsToDropDown("Sloth Theme")
+  addOptionsToDropDown("Duck Theme")
+  addOptionsToDropDown("South Park Theme")
 
   newForm.addEventListener("submit", validateForm);
 };
@@ -317,6 +348,8 @@ displayForm = event => {
 validateForm = event => {
   event.preventDefault();
   let username = event.target[0].value;
+  userTheme = event.target[1].value;
+  // console.log(userTheme)
   if (username === "") {
     alert("You must enter a username");
   } else {
