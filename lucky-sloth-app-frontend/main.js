@@ -1,4 +1,4 @@
-////////////////////// API //////////////////////
+//////////////////////////////////////////// API ////////////////////////////////////////////
 
 get = url => fetch(url).then(resp => resp.json());
 
@@ -24,7 +24,7 @@ patch = (url, id, data) => {
 
 const API = { get, post, patch };
 
-////////////////////// CONSTANTS //////////////////////
+//////////////////////////////////////////// CONSTANTS ////////////////////////////////////////////
 
 //url
 const usersUrl = "http://localhost:3000/users/";
@@ -49,6 +49,11 @@ const audio = new Audio('sounds/slotmachinesound.wav')
 
 
 //images
+const spinButtonImage = "images/game/spinbutton.png";
+const questionMarkBear = "images/game/question-bear_dribbble.png";
+let image1 = document.querySelector("#image-1 img");
+let image2 = document.querySelector("#image-2 img");
+let image3 = document.querySelector("#image-3 img");
 const slothImageCollection = {
   "Sloth-Theme": [
     "images/sloth-theme/javascript-ninja-sloth.png",
@@ -79,16 +84,15 @@ const slothImageCollection = {
     "images/george-theme/angry-george.jpg",
     "images/george-theme/happy-george.jpg",
     "images/george-theme/silly-george.jpg"
+  ],
+  "Cat-Theme": [
+    "images/cat-theme/flying-cat.jpg",
+    "images/cat-theme/mexican-cat.jpg",
+    "images/cat-theme/scared-cat.jpg"
   ]
-
 };
-const spinButtonImage = "images/game/spinbutton.png";
-const questionMarkBear = "images/game/question-bear_dribbble.png";
-let image1 = document.querySelector("#image-1 img");
-let image2 = document.querySelector("#image-2 img");
-let image3 = document.querySelector("#image-3 img");
 
-////////////////////// FUNCTIONS //////////////////////
+//////////////////////////////////////////// FUNCTIONS ////////////////////////////////////////////
 
 // handle slot result
 
@@ -363,7 +367,10 @@ displayForm = event => {
   submitButton.className = "form-container-items btn btn-success"
   submitButton.value = "Create User";
 
-  formDiv.appendChild(newForm);
+  const moneySlothGif = document.createElement("img")
+  moneySlothGif.src = "https://media3.giphy.com/media/BCtjVLKRoFVza/source.gif"
+
+  formDiv.append(newForm, moneySlothGif);
   newForm.append(formContentDiv)
   formContentDiv.append(inputSubDiv, dropDownSubDiv, buttonSubDiv)
   inputSubDiv.append(usernameInput)
@@ -376,6 +383,7 @@ displayForm = event => {
   addOptionsToDropDown("Zombie Theme")
   addOptionsToDropDown("Harry Potter Theme")
   addOptionsToDropDown("George Theme")
+  addOptionsToDropDown("Cat Theme")
 
   newForm.addEventListener("submit", validateForm);
 };
@@ -391,6 +399,6 @@ validateForm = event => {
   }
 };
 
-////////////////////// EVENT LISTENERS //////////////////////
+//////////////////////////////////////////// EVENT LISTENERS ////////////////////////////////////////////
 
 document.body.onload = displayForm;
