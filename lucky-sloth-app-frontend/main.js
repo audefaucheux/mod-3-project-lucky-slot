@@ -78,6 +78,11 @@ const slothImageCollection = {
     "images/george-theme/happy-george.jpg",
     "images/george-theme/silly-george.jpg"
   ],
+  "Flatiron-Theme": [
+    "images/flatiron-theme/charly.png", 
+    "images/flatiron-theme/ian.png", 
+    "images/flatiron-theme/daniel.png"
+  ],
       "Harry-Potter-Theme": [
         "images/harry-potter-theme/harrypotter.png",
         "images/harry-potter-theme/harrypotter2.png",
@@ -408,13 +413,14 @@ displayForm = event => {
   buttonSubDiv.append(submitButton);
 
   addOptionsToDropDown("Sloth Theme");
+  addOptionsToDropDown("Cat Theme");
   addOptionsToDropDown("Duck Theme");
+  addOptionsToDropDown("Flatiron Theme")
+  addOptionsToDropDown("George Theme");
+  addOptionsToDropDown("Harry Potter Theme");
+  addOptionsToDropDown("Keanu Theme");
   addOptionsToDropDown("South Park Theme");
   addOptionsToDropDown("Zombie Theme");
-  addOptionsToDropDown("Harry Potter Theme");
-  addOptionsToDropDown("George Theme");
-  addOptionsToDropDown("Cat Theme");
-  addOptionsToDropDown("Keanu Theme");
 
   newForm.addEventListener("submit", validateForm);
 };
