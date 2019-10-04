@@ -8,17 +8,16 @@
 
 h1 {
   font-family: "quite_magicalregular" !important;
-  font-size: 80px !important;
+  font-size: 90px !important;
 }
 
 h2 {
   font-family: "quite_magicalregular" !important;
-  font-size: 60px !important;
+  font-size: 70px !important;
 }
 
 body {
-  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif !important;
-  /* background-color: seagreen; */
+  font-family: "Trebuchet MS", Helvetica, sans-serif  !important;
   /* background-image: url("../images/sloth-theme/flying-sloth.jpg");
   background-repeat: no-repeat; */
   /* background-size: 100% */
@@ -34,7 +33,7 @@ input, select {
 }
 
 h1, #bet-header span, .credit-span {
-  color: seagreen;
+  color: lightseagreen;
 }
 
 div#slot-machine {
@@ -92,7 +91,7 @@ div#slot-machine {
 }
 
 .form-container {
-  padding: 3% 44.5%;
+  padding: 4% 0 4% 42%;
   flex-direction: column;
   text-align: left;
 }
@@ -100,4 +99,12 @@ div#slot-machine {
 .form-container-items {
   margin-top: 15px;
   border-radius: 6px;
+}
+
+#stop-logo {
+  background-image: url("../images/game/Whenthefunstopsstop-color.jpg");
+}
+
+#stop-logo img{
+  height: 100px;
 }
