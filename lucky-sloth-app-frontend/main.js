@@ -41,15 +41,13 @@ const slotMachineResultMessageDiv = document.querySelector(
 const leaderboardDiv = document.querySelector("div#leaderboard-table");
 const loginDiv = document.querySelector("div#back-to-login");
 const welcomeDiv = document.querySelector("div#welcome");
-const image1Div = document.querySelector("div#image-1")
-const image2Div = document.querySelector("div#image-2")
-const image3Div = document.querySelector("div#image-3")
-let userTheme = ""
-const audio = new Audio('sounds/slotmachinesound.wav')
-const loseaudio = new Audio('sounds/lose.mp3')
-const winaudio = new Audio('sounds/winaudio.wav')
-
-
+const image1Div = document.querySelector("div#image-1");
+const image2Div = document.querySelector("div#image-2");
+const image3Div = document.querySelector("div#image-3");
+let userTheme = "";
+const audio = new Audio("sounds/slotmachinesound.wav");
+const loseaudio = new Audio("sounds/lose.mp3");
+const winaudio = new Audio("sounds/winaudio.wav");
 
 //images
 const spinButtonImage = "images/game/spinbutton.png";
@@ -58,46 +56,48 @@ let image1 = document.querySelector("#image-1 img");
 let image2 = document.querySelector("#image-2 img");
 let image3 = document.querySelector("#image-3 img");
 const slothImageCollection = {
+  
+  
   "Sloth-Theme": [
     "images/sloth-theme/javascript-ninja-sloth.png",
     "images/sloth-theme/ninja-sloth.png",
     "images/sloth-theme/red-ninja-sloth.png"
-  ],
-  "Duck-Theme": [
-    "images/rubber-duck-theme/cloud-duck.jpg",
-    "images/rubber-duck-theme/polka-dots-duck.jpg",
-    "images/rubber-duck-theme/watermelon-duck.jpg"
-  ],
-  "South-Park-Theme": [
-    "images/south-park-theme/ButtersStotch.png",
-    "images/south-park-theme/cartman.png",
-    "images/south-park-theme/Jimmy.png",
-  ],
-  "Zombie-Theme": [
-    "images/zombie-theme/zombie1.jpg",
-    "images/zombie-theme/zombie2.jpg",
-    "images/zombie-theme/zombie3.jpg",
-  ], 
-  "Harry-Potter-Theme": [
-    "images/harry-potter-theme/harrypotter.png", 
-    "images/harry-potter-theme/harrypotter2.png", 
-    "images/harry-potter-theme/harrypotter3.png"
-  ],
-  "George-Theme": [
-    "images/george-theme/angry-george.jpg",
-    "images/george-theme/happy-george.jpg",
-    "images/george-theme/silly-george.jpg"
   ],
   "Cat-Theme": [
     "images/cat-theme/flying-cat.jpg",
     "images/cat-theme/mexican-cat.jpg",
     "images/cat-theme/scared-cat.jpg"
   ],
+  "Duck-Theme": [
+    "images/rubber-duck-theme/cloud-duck.jpg",
+    "images/rubber-duck-theme/polka-dots-duck.jpg",
+    "images/rubber-duck-theme/watermelon-duck.jpg"
+  ],
+  "George-Theme": [
+    "images/george-theme/angry-george.jpg",
+    "images/george-theme/happy-george.jpg",
+    "images/george-theme/silly-george.jpg"
+  ],
+      "Harry-Potter-Theme": [
+        "images/harry-potter-theme/harrypotter.png",
+        "images/harry-potter-theme/harrypotter2.png",
+        "images/harry-potter-theme/harrypotter3.png"
+      ],
   "Keanu-Theme": [
     "images/keanu-theme/angry-keanu.jpg",
     "images/keanu-theme/bill-and-ted-keanu.png",
     "images/keanu-theme/matrix-keanu.png"
-  ]
+  ],
+  "South-Park-Theme": [
+    "images/south-park-theme/ButtersStotch.png",
+    "images/south-park-theme/cartman.png",
+    "images/south-park-theme/Jimmy.png"
+  ],
+  "Zombie-Theme": [
+    "images/zombie-theme/zombie1.jpg",
+    "images/zombie-theme/zombie2.jpg",
+    "images/zombie-theme/zombie3.jpg"
+  ],
 };
 
 //////////////////////////////////////////// FUNCTIONS ////////////////////////////////////////////
@@ -108,38 +108,40 @@ function updateUsersCredit(userData, user) {
   API.patch(usersUrl, user.id, { credit: userData }).then(checkGameOver);
 }
 
-getResult = (randomNumberArray, user) => {  
+getResult = (randomNumberArray, user) => {
   let uniqueNumberArray = [...new Set(randomNumberArray)];
   let bet = document.querySelector("#bet-header").dataset.id;
   let betNum = parseInt(bet);
   if (uniqueNumberArray.length === 1) {
-    renderConfetti()
-    winaudio.play()
+    renderConfetti();
+    winaudio.play();
     let newCredit = user.credit + betNum * 10;
-    slotMachineResultMessageDiv.innerHTML = "🥇🥇🥇<span class='text-magical'> YOU WON ! </span>🥇🥇🥇"
+    slotMachineResultMessageDiv.innerHTML =
+      "🥇🥇🥇<span class='text-magical'> YOU WON ! </span>🥇🥇🥇";
     updateUsersCredit(newCredit, user);
   } else {
     let newCredit = user.credit - betNum;
-    slotMachineResultMessageDiv.innerHTML = "<span class='text-magical'>You lost </span> 😢"
+    slotMachineResultMessageDiv.innerHTML =
+      "<span class='text-magical'>You lost </span> 😢";
     updateUsersCredit(newCredit, user);
   }
 };
 
+// game over 
 
-checkGameOver = (user) => {
+checkGameOver = user => {
   if (user.credit === 0) {
-  removeDivChildren(spinButtonDiv)
-  removeDivChildren(slotMachineHeaderDiv)
-  header = document.createElement("h2")
-  loseaudio.play()
-  header.innerText = `Game Over!  You've run out of credits!`
-  header.style.color = "darkmagenta"
-  slotMachineHeaderDiv.append(header)
+    removeDivChildren(spinButtonDiv);
+    removeDivChildren(slotMachineHeaderDiv);
+    header = document.createElement("h2");
+    loseaudio.play();
+    header.innerText = `Game Over!  You've run out of credits!`;
+    header.style.color = "darkmagenta";
+    slotMachineHeaderDiv.append(header);
   } else {
-    renderWelcomePage(user)
+    renderWelcomePage(user);
   }
-}
-
+};
 
 // render betting menu
 
@@ -211,18 +213,19 @@ getRandomNumber = () => {
 
 renderImage = (index, image) => {
   image.src = slothImageCollection[userTheme][index];
-  image.className = ''
+  image.className = "";
 };
 
 renderSlotMachine = user => {
   let randomNumberArray = getRandomNumber(); //final results array e.g. [2.1.2]
-  slotMachineResultMessageDiv.innerHTML = "<span class='text-magical'>Spinning...</span> ⌛"
+  slotMachineResultMessageDiv.innerHTML =
+    "<span class='text-magical'>Spinning...</span> ⌛";
   image1.src = questionMarkBear;
   image2.src = questionMarkBear;
   image3.src = questionMarkBear;
-  image1.className = "animated infinite shake"
-  image2.className = "animated infinite shake"
-  image3.className = "animated infinite shake"
+  image1.className = "animated infinite shake";
+  image2.className = "animated infinite shake";
+  image3.className = "animated infinite shake";
   setTimeout(() => renderImage(randomNumberArray[0], image1), 1000);
   setTimeout(() => renderImage(randomNumberArray[1], image2), 1400);
   setTimeout(() => renderImage(randomNumberArray[2], image3), 1900);
@@ -312,31 +315,32 @@ renderWelcomePage = user => {
   loginBtn.addEventListener("click", () => location.reload());
 
   if (!slotMachineResultMessageDiv.firstChild) {
-    slotMachineResultMessageDiv.innerHTML = "⬆️⬆️⬆️ <span class='text-magical'>Spin to play !!</span> ⬆️⬆️⬆️"
+    slotMachineResultMessageDiv.innerHTML =
+      "⬆️⬆️⬆️ <span class='text-magical'>Spin to play !!</span> ⬆️⬆️⬆️";
   }
 
-  if(!image1Div.firstChild) {
-    image1 = document.createElement("img")
-    image1.src = "images/game/question-bear_dribbble.png"
-    image2 = document.createElement("img")
-    image2.src = "images/game/question-bear_dribbble.png"
-    image3 = document.createElement("img")
-    image3.src = "images/game/question-bear_dribbble.png"
-    image1Div.append(image1)
-    image2Div.append(image2)
-    image3Div.append(image3)
+  if (!image1Div.firstChild) {
+    image1 = document.createElement("img");
+    image1.src = "images/game/question-bear_dribbble.png";
+    image2 = document.createElement("img");
+    image2.src = "images/game/question-bear_dribbble.png";
+    image3 = document.createElement("img");
+    image3.src = "images/game/question-bear_dribbble.png";
+    image1Div.append(image1);
+    image2Div.append(image2);
+    image3Div.append(image3);
   }
 
   API.get(usersUrl).then(renderLeaderboard);
 
   spinButton.addEventListener("click", event => {
-    audio.play()
-    spinButton.className = "spin-button animated tada"
-    if (user.credit >= 10) {
+    audio.play();
+    // spinButton.className = "spin-button animated tada";
+    // if (user.credit >= 10) {
       renderSlotMachine(user);
-    } else {
-      console.log("You are too poor to play");
-    }
+    // } else {
+    //   console.log("You are too poor to play");
+    // }
   });
 };
 
@@ -346,20 +350,20 @@ handleSubmit = username => {
   API.get(usersUrl).then(result => {
     if (result.find(element => element.username === username)) {
       let user = result.find(element => element.username === username);
-      renderWelcomePage(user);
+      checkGameOver(user);
     } else {
       API.post(usersUrl, { username: username }).then(renderWelcomePage);
     }
   });
 };
 
-addOptionsToDropDown = (themeName) => {
-  const themeDropDown = document.querySelector("select#theme-dropdown")
-  let newThemeOption = document.createElement("option")
-  newThemeOption.value = themeName.replace(/\s+/g,"-");
+addOptionsToDropDown = themeName => {
+  const themeDropDown = document.querySelector("select#theme-dropdown");
+  let newThemeOption = document.createElement("option");
+  newThemeOption.value = themeName.replace(/\s+/g, "-");
   newThemeOption.innerText = themeName;
-  themeDropDown.append(newThemeOption)
-}
+  themeDropDown.append(newThemeOption);
+};
 
 displayForm = event => {
   slotMachineDiv.style.visibility = "hidden";
@@ -371,46 +375,46 @@ displayForm = event => {
   const newForm = document.createElement("form");
   newForm.setAttribute("id", "create-user-form");
 
-  const formContentDiv = document.createElement("div")
-  formContentDiv.className = "form-container"
-  
-  const inputSubDiv = document.createElement("div")
+  const formContentDiv = document.createElement("div");
+  formContentDiv.className = "form-container";
+
+  const inputSubDiv = document.createElement("div");
   const usernameInput = document.createElement("input");
   usernameInput.type = "text";
-  usernameInput.className = "form-container-items"
+  usernameInput.className = "form-container-items";
   usernameInput.placeholder = "enter username...";
 
-  const dropDownSubDiv = document.createElement("div")
-  dropDownSubDiv.className = "form-container-items"
+  const dropDownSubDiv = document.createElement("div");
+  dropDownSubDiv.className = "form-container-items";
   const themeDropDown = document.createElement("select");
   themeDropDown.id = "theme-dropdown";
-  themeDropDown.className = "form-container-items"
+  themeDropDown.className = "form-container-items";
 
-  const buttonSubDiv = document.createElement("div")
-  buttonSubDiv.className = "form-container-items"
+  const buttonSubDiv = document.createElement("div");
+  buttonSubDiv.className = "form-container-items";
   const submitButton = document.createElement("input");
   submitButton.type = "submit";
-  submitButton.className = "form-container-items btn btn-info"
+  submitButton.className = "form-container-items btn btn-info";
   submitButton.value = "Create User";
 
-  const moneySlothGif = document.createElement("img")
-  moneySlothGif.src = "https://media3.giphy.com/media/BCtjVLKRoFVza/source.gif"
+  const moneySlothGif = document.createElement("img");
+  moneySlothGif.src = "https://media3.giphy.com/media/BCtjVLKRoFVza/source.gif";
 
   formDiv.append(newForm, moneySlothGif);
-  newForm.append(formContentDiv)
-  formContentDiv.append(inputSubDiv, dropDownSubDiv, buttonSubDiv)
-  inputSubDiv.append(usernameInput)
-  dropDownSubDiv.append(themeDropDown)
-  buttonSubDiv.append(submitButton)
+  newForm.append(formContentDiv);
+  formContentDiv.append(inputSubDiv, dropDownSubDiv, buttonSubDiv);
+  inputSubDiv.append(usernameInput);
+  dropDownSubDiv.append(themeDropDown);
+  buttonSubDiv.append(submitButton);
 
-  addOptionsToDropDown("Sloth Theme")
-  addOptionsToDropDown("Duck Theme")
-  addOptionsToDropDown("South Park Theme")
-  addOptionsToDropDown("Zombie Theme")
-  addOptionsToDropDown("Harry Potter Theme")
-  addOptionsToDropDown("George Theme")
-  addOptionsToDropDown("Cat Theme")
-  addOptionsToDropDown("Keanu Theme")
+  addOptionsToDropDown("Sloth Theme");
+  addOptionsToDropDown("Duck Theme");
+  addOptionsToDropDown("South Park Theme");
+  addOptionsToDropDown("Zombie Theme");
+  addOptionsToDropDown("Harry Potter Theme");
+  addOptionsToDropDown("George Theme");
+  addOptionsToDropDown("Cat Theme");
+  addOptionsToDropDown("Keanu Theme");
 
   newForm.addEventListener("submit", validateForm);
 };
@@ -430,24 +434,23 @@ validateForm = event => {
 
 document.body.onload = displayForm;
 
-
 // confetti
 const renderConfetti = () => {
-  let end = Date.now() + (1 * 1000);
- let interval = setInterval(function() {
+  let end = Date.now() + 1 * 1000;
+  let interval = setInterval(function() {
     if (Date.now() > end) {
-        return clearInterval(interval);
+      return clearInterval(interval);
     }
     confetti({
-        startVelocity: 30,
-        spread: 360,
-        ticks: 60,
-        shapes: ['square'],
-        origin: {
-            x: Math.random(),
-            // since they fall down, start a bit higher than random
-            y: Math.random() - 0.2
-        }
+      startVelocity: 30,
+      spread: 360,
+      ticks: 60,
+      shapes: ["square"],
+      origin: {
+        x: Math.random(),
+        // since they fall down, start a bit higher than random
+        y: Math.random() - 0.2
+      }
     });
- }, 200);
- }
+  }, 200);
+};
