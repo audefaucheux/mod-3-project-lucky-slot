@@ -1,24 +1,33 @@
-# README
+# Lucky Sloth - Backend
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Make sure you are in the lucky-sloth-app-backend directory, then run the below commands to get the backend up and running:
 
-Things you may want to cover:
+Run bundle install
 
-* Ruby version
+```
+bundle install
+```
 
-* System dependencies
+Create the database
 
-* Configuration
+```
+rails db:create
+```
 
-* Database creation
+Run the migration files
 
-* Database initialization
+```
+rails db:migrate
+```
 
-* How to run the test suite
+Run the seed data
 
-* Services (job queues, cache servers, search engines, etc.)
+```
+rails db:seed
+```
 
-* Deployment instructions
+Run the app on the local host
 
-* ...
+```
+rails s
+```
