@@ -25,3 +25,5 @@ open index.html
 - Aude Faucheux
 
 # Overview
+
+![](overview-lucky-slot.gif)
