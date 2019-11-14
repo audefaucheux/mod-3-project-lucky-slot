@@ -5,7 +5,7 @@ Have fun !
 
 # Getting Started
 
-The Lucky Sloth app uses Ruby on Rails backend and JavaScript frontend.
+The Lucky Sloth app uses Ruby on Rails backend and Vanilla JavaScript frontend.
 
 [Click here](lucky-sloth-app-backend/README.md) to set up the backend
 
